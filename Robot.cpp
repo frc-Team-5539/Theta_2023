@@ -34,7 +34,7 @@ void Robot::RobotInit() {
   //m_rightFollowMotor.RestoreFactoryDefaults();
 
   m_robotDrive.DriveCartesian (-m_driverController.GetLeftY(), -m_driverController.GetLeftX(),
-                                -m_driverController.GetRightX());
+                                - -m_driverController.GetRightTriggerAxis() + -m_driverController.GetLeftTriggerAxis());
   m_frontLeft.SetInverted(true);
   m_rearLeft.SetInverted(true);
   m_robotDrive.SetExpiration(100_ms);
@@ -188,12 +188,10 @@ if (m_driverController.GetXButtonPressed()) {
 
 
 //Grabber
-// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-
 m_grabber.Set(frc::DoubleSolenoid::Value::kOff);
 m_grabber.Set(frc::DoubleSolenoid::Value::kForward);
 m_grabber.Set(frc::DoubleSolenoid::Value::kReverse);
-
+// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
 m_grabber.Set(frc::DoubleSolenoid::Value::kReverse);
 
 if (m_driverController.GetBButtonPressed()) {
