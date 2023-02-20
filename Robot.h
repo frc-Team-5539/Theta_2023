@@ -20,7 +20,7 @@
 #include <cstdio>
 #include <cameraserver/CameraServer.h>
 
-
+#include <frc/RobotController.h>
 //add these for SparkMax CAN 2 pairs of CIM motors (brushed)
 #include <frc/drive/MecanumDrive.h>
 #include <rev/CANSparkMax.h>
@@ -82,8 +82,9 @@ class Robot : public frc::TimedRobot {
   frc::XboxController m_driverController{0};
   //frc::DigitalInput   limit_switch{9};
   frc::AnalogInput    ai{0};
-  frc::AnalogInput    ultra{1};
+  frc::AnalogInput    ultrasonic{1};
   
+
   
   frc::Timer         m_timer;
 
@@ -129,8 +130,10 @@ class Robot : public frc::TimedRobot {
   double ai_voltage = 0.0;
 
   int ultra_raw = 0;
-  double distance = 0.0;
-  double adc_to_mm = 1.25 / 1000.0 ;
+  double currentDistanceCentimeters = 0;
+  double currentDistanceInches = 0;
+  //double distance = 0.0;
+  //double adc_to_mm = 1.25 / 1000.0 ;
 
   double xSpeed = 0.0;
   double ySpeed = 0.0;
@@ -140,7 +143,9 @@ class Robot : public frc::TimedRobot {
   double kReverse = 0.0;
   double kForward = 0.0;
 
-  int kSize640x480 = 0;
+  double voltage_scale_factor = 0.0;
+
+  //int kSize640x480 = 0;
 };
 
 
