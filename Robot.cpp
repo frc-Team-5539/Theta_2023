@@ -74,7 +74,8 @@ void Robot::RobotPeriodic()  {
   frc::SmartDashboard::PutNumber("ai voltage :", ai_voltage);
 
   frc::SmartDashboard::PutNumber("ultra raw :", ultra_raw);
-  frc::SmartDashboard::PutNumber("ultra distance :", distance);
+  frc::SmartDashboard::PutNumber("ultra distance cm:", currentDistanceCentimeters);
+  frc::SmartDashboard::PutNumber("ultra distance in:", currentDistanceInches);
 
 }
 
@@ -99,7 +100,7 @@ void Robot::AutonomousInit() {
 
   //if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
-      m_timer.Reset();
+    m_timer.Reset();
     m_timer.Start();
     ia = 0;
 
@@ -154,14 +155,17 @@ void Robot::TeleopPeriodic() {
   ai_raw = ai.GetValue();
   ai_voltage = ai.GetVoltage();
 
-  ultra_raw = ultra.GetValue();
-  distance = (double) ultra_raw * adc_to_mm ;
+  ultra_raw = ultrasonic.GetValue();
+  currentDistanceCentimeters = ultra_raw * voltage_scale_factor * 0.125;
+  frc::RobotController::GetVoltage5V	(	);	
+  
+  currentDistanceInches = ultra_raw * voltage_scale_factor * 0.0492;
 
 //Drive Cartesian
   m_robotDrive.DriveCartesian(-m_driverController.GetLeftX(), - -m_driverController.GetLeftY(),
                                - -m_driverController.GetRightTriggerAxis() + -m_driverController.GetLeftTriggerAxis());
 
-// -m_driverController.GetRightX()
+
 //When we calibrated XBox controller, Z-axis showed up on triggers so switched back to triggers 
 //DID IT-CARLOS!
 
