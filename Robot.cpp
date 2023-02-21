@@ -39,6 +39,8 @@ void Robot::RobotInit() {
   m_rearLeft.SetInverted(true);
   m_robotDrive.SetExpiration(100_ms);
   m_timer.Start();
+  //Invert right motor on armextender so they work together and not against each other
+  m_right_motor_armextender.SetInverted(true);
 }
 
 /**
@@ -154,11 +156,10 @@ void Robot::TeleopPeriodic() {
 
   ai_raw = ai.GetValue();
   ai_voltage = ai.GetVoltage();
-
+  
+  frc::RobotController::GetVoltage5V	(	);	
   ultra_raw = ultrasonic.GetValue();
   currentDistanceCentimeters = ultra_raw * voltage_scale_factor * 0.125;
-  frc::RobotController::GetVoltage5V	(	);	
-  
   currentDistanceInches = ultra_raw * voltage_scale_factor * 0.0492;
 
 //Drive Cartesian
