@@ -188,7 +188,7 @@ m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
 m_uparm.Set(frc::DoubleSolenoid::kForward);
 if (m_driverController.GetXButtonPressed()) {
    m_uparm.Toggle();
-   m_uparm.Toggle();
+ 
 }
 m_downarm.Set(frc::DoubleSolenoid::Value::kOff);
 m_downarm.Set(frc::DoubleSolenoid::Value::kForward);
@@ -198,7 +198,7 @@ m_downarm.Set(frc::DoubleSolenoid::Value::kReverse);
 m_downarm.Set(frc::DoubleSolenoid::kReverse);
 if (m_driverController.GetYButtonPressed()) {
    m_downarm.Toggle();
-   m_downarm.Toggle();
+   
 }
 
 //Grabber
@@ -210,7 +210,7 @@ m_grabberopen.Set(frc::DoubleSolenoid::Value::kReverse);
 
 if (m_driverController.GetBButtonPressed()) {
    m_grabberopen.Toggle();
-   m_grabberopen.Toggle();
+   
 }
 m_grabberclose.Set(frc::DoubleSolenoid::Value::kOff);
 m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
@@ -220,7 +220,7 @@ m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
 
 if (m_driverController.GetAButtonPressed()) {
    m_grabberclose.Toggle();
-   m_grabberclose.Toggle();
+   
 }
   //Claw
   //double rightTrigger = m_joystick.GetTriggerAxis(frc::GenericHID::kRightHand);
