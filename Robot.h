@@ -92,11 +92,11 @@ class Robot : public frc::TimedRobot {
 
   //Pneumatics
   //pneumatics cylindar to raise and lower arm
-  frc::DoubleSolenoid m_updownarm{1, frc::PneumaticsModuleType::REVPH, 0, 1};
-  
+  frc::DoubleSolenoid m_uparm{1, frc::PneumaticsModuleType::REVPH, 0, 1};
+  frc::DoubleSolenoid m_downarm{1, frc::PneumaticsModuleType::REVPH, 2, 3};
   //Pneumatics cylindar to open and close grabber
-  frc::DoubleSolenoid  m_grabber{1, frc::PneumaticsModuleType::REVPH, 2, 3};
-
+  frc::DoubleSolenoid  m_grabberopen{1, frc::PneumaticsModuleType::REVPH, 4, 5};
+  frc::DoubleSolenoid  m_grabberclose{1, frc::PneumaticsModuleType::REVPH, 6, 7};
 
 
   frc::Compressor phCompressor{1, frc::PneumaticsModuleType::REVPH};
@@ -130,8 +130,8 @@ class Robot : public frc::TimedRobot {
   double ai_voltage = 0.0;
 
   int ultra_raw = 0;
-  double currentDistanceCentimeters = 0;
-  double currentDistanceInches = 0;
+  double currentDistanceCentimeters = 0.0;
+  double currentDistanceInches = 0.0;
   //double distance = 0.0;
   //double adc_to_mm = 1.25 / 1000.0 ;
 
