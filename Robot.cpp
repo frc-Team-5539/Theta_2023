@@ -180,30 +180,48 @@ m_armextender.Set(rightbumper);
 
 //Pneumatics
 //Arm up and down
-m_updownarm.Set(frc::DoubleSolenoid::Value::kOff);
-m_updownarm.Set(frc::DoubleSolenoid::Value::kForward);
-m_updownarm.Set(frc::DoubleSolenoid::Value::kReverse);
+m_uparm.Set(frc::DoubleSolenoid::Value::kOff);
+m_uparm.Set(frc::DoubleSolenoid::Value::kForward);
+m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
 
 // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-m_updownarm.Set(frc::DoubleSolenoid::kForward);
+m_uparm.Set(frc::DoubleSolenoid::kForward);
 if (m_driverController.GetXButtonPressed()) {
-   m_updownarm.Toggle();
-   m_updownarm.Toggle();
+   m_uparm.Toggle();
+   m_uparm.Toggle();
 }
+m_downarm.Set(frc::DoubleSolenoid::Value::kOff);
+m_downarm.Set(frc::DoubleSolenoid::Value::kForward);
+m_downarm.Set(frc::DoubleSolenoid::Value::kReverse);
 
+// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
+m_downarm.Set(frc::DoubleSolenoid::kReverse);
+if (m_driverController.GetYButtonPressed()) {
+   m_downarm.Toggle();
+   m_downarm.Toggle();
+}
 
 //Grabber
-m_grabber.Set(frc::DoubleSolenoid::Value::kOff);
-m_grabber.Set(frc::DoubleSolenoid::Value::kForward);
-m_grabber.Set(frc::DoubleSolenoid::Value::kReverse);
+m_grabberopen.Set(frc::DoubleSolenoid::Value::kOff);
+m_grabberopen.Set(frc::DoubleSolenoid::Value::kForward);
+m_grabberopen.Set(frc::DoubleSolenoid::Value::kReverse);
 // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-m_grabber.Set(frc::DoubleSolenoid::Value::kReverse);
+m_grabberopen.Set(frc::DoubleSolenoid::Value::kReverse);
 
 if (m_driverController.GetBButtonPressed()) {
-   m_grabber.Toggle();
-   m_grabber.Toggle();
+   m_grabberopen.Toggle();
+   m_grabberopen.Toggle();
 }
+m_grabberclose.Set(frc::DoubleSolenoid::Value::kOff);
+m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
+m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
+// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
+m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
 
+if (m_driverController.GetAButtonPressed()) {
+   m_grabberclose.Toggle();
+   m_grabberclose.Toggle();
+}
   //Claw
   //double rightTrigger = m_joystick.GetTriggerAxis(frc::GenericHID::kRightHand);
   // bool leftTrigger = m_joystick.GetTriggerAxis(frc::GenericHID::kLeftHand);
