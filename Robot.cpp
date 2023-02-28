@@ -13,16 +13,36 @@ void Robot::RobotInit() {
   //m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
+//Camera
+
       #if defined(__linux__) || defined(_WIN32)
-  frc::CameraServer::StartAutomaticCapture();
+
+  frc::CameraServer::StartAutomaticCapture(0);
+  frc::CameraServer::StartAutomaticCapture(1);
+  frc::CameraServer::GetServer(DriveCam0);
+  frc::CameraServer::GetServer(ClawCam1);
+
+  nt::NetworkTableInstance::GetDefault().GetTable("0")->GetEntry("CameraSelection");
+  nt::NetworkTableInstance::GetDefault().GetTable("1")->GetEntry("CameraSelection");
+//frc::CameraServer  DriveCam0{0};
+
   #else
     std::fputs("Vision only available on Linux or Windows.\n", stderr);
     std::fflush(stderr);
 #endif
   //frc::CameraServer::SetSize	(	kSize640x480 );
- frc::CameraServer::PutVideo	(	DriveCam, 1280, 720);
+  frc::CameraServer::GetVideo();
+ 
+ frc::CameraServer::PutVideo	(	DriveCam0, 1280, 720);
+ frc::CameraServer::PutVideo	(	ClawCam1, 1280, 720);
 
  //Fix Camera
+
+  //cs::VideoSink server;
+  //DriveCam0; (cs::VideoSource::ConnectionStrategy::kConnectionKeepOpen);
+  //ClawCam1; (cs::VideoSource::ConnectionStrategy::kConnectionKeepOpen);
+
+
     
      // The RestoreFactoryDefaults method can be used to reset the configuration parameters
      // in the SPARK MAX to their factory default state. If no argument is passed, these
@@ -41,6 +61,9 @@ void Robot::RobotInit() {
   m_timer.Start();
   //Invert right motor on armextender so they work together and not against each other
   m_right_motor_armextender.SetInverted(true);
+
+
+  //frc::CameraServer::AddCamera(DriveCam)
 }
 
 /**
@@ -168,7 +191,7 @@ void Robot::TeleopPeriodic() {
 
 
 //When we calibrated XBox controller, Z-axis showed up on triggers so switched back to triggers 
-//DID IT-CARLOS!
+// I DID IT-CARLOS!
 
 
 //armextender lengthen using PWM Sparks paired

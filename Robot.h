@@ -17,8 +17,14 @@
 #include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/motorcontrol/PWMMotorController.h>
 
+//Camera
 #include <cstdio>
+#include <thread>
+
 #include <cameraserver/CameraServer.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/core/types.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <frc/RobotController.h>
 //add these for SparkMax CAN 2 pairs of CIM motors (brushed)
@@ -88,7 +94,17 @@ class Robot : public frc::TimedRobot {
   
   frc::Timer         m_timer;
 
-  std::string_view   DriveCam;
+  std::string_view   DriveCam0; 
+  std::string_view   ClawCam1;
+
+
+  
+
+  //cs::UsbCamera      DriveCam0;
+  //cs::UsbCamera      ClawCam1;
+
+  nt::NetworkTableEntry cameraSelection;
+
 
   //Pneumatics
   //pneumatics cylindar to raise and lower arm
@@ -145,7 +161,8 @@ class Robot : public frc::TimedRobot {
 
   double voltage_scale_factor = 0.0;
 
-  //int kSize640x480 = 0;
+  //int DriveCam0 = 0;
+  //int ClawCam1 = 1;
 };
 
 
