@@ -38,7 +38,6 @@
 #include <frc/Solenoid.h>
 #include <frc/DoubleSolenoid.h>
 
-
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -102,7 +101,7 @@ class Robot : public frc::TimedRobot {
 
   //cs::UsbCamera      DriveCam0;
   //cs::UsbCamera      ClawCam1;
-
+  
   nt::NetworkTableEntry cameraSelection;
 
 
@@ -134,11 +133,13 @@ class Robot : public frc::TimedRobot {
   bool bB = false;
   bool bX = false;
   bool bY = false;
+  bool LeftStick = false;
+  bool RightStick = false;
   double left_x = 0.0;
   double left_y = 0.0;
   double right_x = 0.0;
   double right_y = 0.0;
-
+  
   //bool limit_switch_value = false;
   //bool knife_switch_value = false;
 
