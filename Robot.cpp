@@ -20,7 +20,9 @@ void Robot::RobotInit() {
   frc::CameraServer::StartAutomaticCapture(0);
   frc::CameraServer::StartAutomaticCapture(1);
   frc::CameraServer::GetServer(DriveCam0);
+  ///frc::CameraServer::AddServer (DriveCam0)
   frc::CameraServer::GetServer(ClawCam1);
+  ///frc::CameraServer::AddServer (ClawCam1)
 
   nt::NetworkTableInstance::GetDefault().GetTable("0")->GetEntry("CameraSelection");
   nt::NetworkTableInstance::GetDefault().GetTable("1")->GetEntry("CameraSelection");
@@ -36,7 +38,12 @@ void Robot::RobotInit() {
  frc::CameraServer::PutVideo	(	DriveCam0, 1280, 720);
  frc::CameraServer::PutVideo	(	ClawCam1, 1280, 720);
 
- //Fix Camera
+
+
+
+
+
+  //Fix Camera
 
   //cs::VideoSink server;
   //DriveCam0; (cs::VideoSource::ConnectionStrategy::kConnectionKeepOpen);
@@ -155,6 +162,16 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+
+
+  if (joy1.GetLeftStickButtonPressed()) {
+    std::cout << "ClawCam" << std::endl;
+    cameraSelection.SetString(ClawCam1.GetName());
+  } else if (joy1.GetLeftStickButtonReleased()) {
+    std::cout << "DriveCam" << std::endl;
+    cameraSelection.SetString(DriveCam0.GetName());
+  }
+
   it++;
 
   left_y = m_driverController.frc::XboxController::GetLeftX(),
