@@ -206,20 +206,7 @@ m_armextender.Set(-0.05);
 m_armextender.Set(rightbumper);
 
 //Pneumatics
-//Arm up and down
-//m_uparm.Set(frc::DoubleSolenoid::Value::kOff);
-//m_uparm.Set(frc::DoubleSolenoid::Value::kForward);
-//m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
-
-
-
-
-//m_downarm.Set(frc::DoubleSolenoid::Value::kOff);
-//m_downarm.Set(frc::DoubleSolenoid::Value::kForward);
-//m_downarm.Set(frc::DoubleSolenoid::Value::kReverse);
-
-
-    //uparm and downarm
+//uparm and downarm
     bool bX = m_driverController.GetXButtonPressed();
     bool bY = m_driverController.GetYButtonPressed();
     if (bX == true)
@@ -232,14 +219,6 @@ m_armextender.Set(rightbumper);
     {
       m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
     }
-
-
-//Grabber
-//m_grabberclose.Set(frc::DoubleSolenoid::Value::kOff);
-//m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
-//m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
-
-
 
 
  //Grabber open and close
@@ -257,43 +236,7 @@ m_armextender.Set(rightbumper);
     }
 
 }
-  //Claw
-  //double rightTrigger = m_joystick.GetTriggerAxis(frc::GenericHID::kRightHand);
-  // bool leftTrigger = m_joystick.GetTriggerAxis(frc::GenericHID::kLeftHand);
-  //if (rightTrigger > 0.2)
-  //{
-  //m_claw.SetAngle(90);
-    //}
-    //if (leftTrigger > 0.2)
-   // {
-     // m_claw.SetAngle(0);
-   // }
-
-    //Claw Up
-    //bool yButton = kjoystick.GetYButton();
-    //bool aButton = kjoystick.GetAButton();
-    //if (yButton == true)
-    //{
-      //m_clawUp.Set(DoubleSolenoid::Value::kForward);
-    //}
-    //if (aButton == true)
-   // {
-      //m_clawUp.Set(DoubleSolenoid::Value::kReverse);
-    //}
-
-    //Claw Forward
-    //bool bButton = m_joystick.GetBButton();
-    //bool xButton = m_joystick.GetXButton();
-
-    //if (bButton == true)
-    //{
-      //m_clawExtend.Set(DoubleSolenoid::Value::kForward);
-    //}
-    //if (xButton == true)
-    //{
-     // m_clawExtend.Set(DoubleSolenoid::Value::kReverse);
-    //}                               
-//}
+  
  
 
 
