@@ -27,6 +27,11 @@
 #include <frc/kinematics/MecanumDriveWheelSpeeds.h>
 #include <frc/motorcontrol/PWMSparkMax.h>
 
+
+//#include <frc/AnalogGyro.h>
+//#include <frc/interfaces/Gyro.h>
+//#include <units/angle.h>
+
 //Pneumatics
 #include <frc/Compressor.h>
 #include <frc/Solenoid.h>
@@ -90,23 +95,27 @@ class Robot : public frc::TimedRobot {
 
   std::string_view   DriveCam;
 
+    cs::UsbCamera      DriveCam0;
+
   //Pneumatics
   //pneumatics cylindar to raise and lower arm
+  //frc::DoubleSolenod m_uparm{1, frc::PneumaticsModuleType::REVPH, 0, 1};
   frc::DoubleSolenoid m_uparm{1, frc::PneumaticsModuleType::REVPH, 0, 1};
-  frc::DoubleSolenoid m_downarm{1, frc::PneumaticsModuleType::REVPH, 2, 3};
   //Pneumatics cylindar to open and close grabber
-  frc::DoubleSolenoid  m_grabberopen{1, frc::PneumaticsModuleType::REVPH, 4, 5};
-  frc::DoubleSolenoid  m_grabberclose{1, frc::PneumaticsModuleType::REVPH, 6, 7};
+  frc::DoubleSolenoid  m_grabberclose{1, frc::PneumaticsModuleType::REVPH, 2, 3};
+  //frc::DoubleSolenoid  m_grabberclose{1, frc::PneumaticsModuleType::REVPH, 2, 3};
 
 
   frc::Compressor phCompressor{1, frc::PneumaticsModuleType::REVPH};
 
   //PWM
-  frc::Spark          m_left_motor_armextender{9};
-  frc::Spark          m_right_motor_armextender{8};
+  frc::Spark            m_armextender{9};
+  //frc::Spark          m_left_motor_armextender{9};
+  //frc::Spark          m_right_motor_armextender{8};
 
-  frc::MotorControllerGroup m_armextender{m_left_motor_armextender,  m_right_motor_armextender};
+  //frc::MotorControllerGroup m_armextender{m_left_motor_armextender,  m_right_motor_armextender};
 
+  //frc::AnalogGyro::AnalogGyro	(1);
 
   bool leftbumper = false;
   bool rightbumper = false;
@@ -147,5 +156,3 @@ class Robot : public frc::TimedRobot {
 
   //int kSize640x480 = 0;
 };
-
-

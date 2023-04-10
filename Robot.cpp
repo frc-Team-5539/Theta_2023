@@ -13,7 +13,9 @@ void Robot::RobotInit() {
   //m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-      #if defined(__linux__) || defined(_WIN32)
+//Camera
+
+   #if defined(__linux__) || defined(_WIN32)
   frc::CameraServer::StartAutomaticCapture();
   #else
     std::fputs("Vision only available on Linux or Windows.\n", stderr);
@@ -22,7 +24,13 @@ void Robot::RobotInit() {
   //frc::CameraServer::SetSize	(	kSize640x480 );
  frc::CameraServer::PutVideo	(	DriveCam, 1280, 720);
 
- //Fix Camera
+  //Fix Camera
+
+  //cs::VideoSink server;
+  //DriveCam0; (cs::VideoSource::ConnectionStrategy::kConnectionKeepOpen);
+  //ClawCam1; (cs::VideoSource::ConnectionStrategy::kConnectionKeepOpen);
+
+
     
      // The RestoreFactoryDefaults method can be used to reset the configuration parameters
      // in the SPARK MAX to their factory default state. If no argument is passed, these
@@ -33,14 +41,20 @@ void Robot::RobotInit() {
   //m_leftFollowMotor.RestoreFactoryDefaults();
   //m_rightFollowMotor.RestoreFactoryDefaults();
 
-  m_robotDrive.DriveCartesian (-m_driverController.GetLeftY(), -m_driverController.GetLeftX(),
-                                - -m_driverController.GetRightTriggerAxis() + -m_driverController.GetLeftTriggerAxis());
   m_frontLeft.SetInverted(true);
-  m_rearLeft.SetInverted(true);
-  m_robotDrive.SetExpiration(100_ms);
-  m_timer.Start();
+   m_rearLeft.SetInverted(true);
+  
+   m_robotDrive.DriveCartesian (-m_driverController.GetLeftY(), -m_driverController.GetLeftX(),
+                                - -m_driverController.GetRightTriggerAxis() + -m_driverController.GetLeftTriggerAxis());
+
+    m_robotDrive.SetExpiration(100_ms);
+    m_timer.Start();
   //Invert right motor on armextender so they work together and not against each other
-  m_right_motor_armextender.SetInverted(true);
+  m_armextender.SetInverted(true);
+
+  //m_robotDrive.DriveCartesian();
+
+  //frc::CameraServer::AddCamera(DriveCam)
 }
 
 /**
@@ -102,9 +116,15 @@ void Robot::AutonomousInit() {
 
   //if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
+  m_frontLeft.SetInverted(true);
+  m_rearLeft.SetInverted(true);
+
     m_timer.Reset();
     m_timer.Start();
     ia = 0;
+// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
+    m_uparm.Set(frc::DoubleSolenoid::kForward);
+    m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
 
 } 
   //else {
@@ -116,9 +136,9 @@ void Robot::AutonomousPeriodic()
   //if (m_autoSelected == kAutoNameCustom) {
     // Custom Auto goes here
    {
-     if (m_timer.Get() < 2_s) {
-      // Drive forwards quarter speed, make sure to turn input squaring off
-      m_robotDrive.DriveCartesian(-0.25, 0.0, false);
+     if (m_timer.Get() < 3_s) {
+      // Drive forwards half speed, make sure to turn input squaring off
+      m_robotDrive.DriveCartesian(0.3, 0.3, false);
     } else {
       // Stop robot
       m_robotDrive.DriveCartesian(0.0, 0.0, false);
@@ -129,9 +149,16 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit() {
     it = 0;
+    // Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
+    m_uparm.Set(frc::DoubleSolenoid::kForward);
+    m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 void Robot::TeleopPeriodic() {
+
+  
+ 
+
   it++;
 
   left_y = m_driverController.frc::XboxController::GetLeftX(),
@@ -168,10 +195,10 @@ void Robot::TeleopPeriodic() {
 
 
 //When we calibrated XBox controller, Z-axis showed up on triggers so switched back to triggers 
-//DID IT-CARLOS!
+// I DID IT-CARLOS!
 
 
-//armextender lengthen using PWM Sparks paired
+//armextender lengthen using PWM Spark  //s paired
 m_armextender.Set(0.05);
 m_armextender.Set(leftbumper);
 //armextender shorten
@@ -180,47 +207,55 @@ m_armextender.Set(rightbumper);
 
 //Pneumatics
 //Arm up and down
-m_uparm.Set(frc::DoubleSolenoid::Value::kOff);
-m_uparm.Set(frc::DoubleSolenoid::Value::kForward);
-m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
+//m_uparm.Set(frc::DoubleSolenoid::Value::kOff);
+//m_uparm.Set(frc::DoubleSolenoid::Value::kForward);
+//m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
 
-// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-m_uparm.Set(frc::DoubleSolenoid::kForward);
-if (m_driverController.GetXButtonPressed()) {
-   m_uparm.Toggle();
- 
-}
-m_downarm.Set(frc::DoubleSolenoid::Value::kOff);
-m_downarm.Set(frc::DoubleSolenoid::Value::kForward);
-m_downarm.Set(frc::DoubleSolenoid::Value::kReverse);
 
-// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-m_downarm.Set(frc::DoubleSolenoid::kReverse);
-if (m_driverController.GetYButtonPressed()) {
-   m_downarm.Toggle();
-   
-}
+
+
+//m_downarm.Set(frc::DoubleSolenoid::Value::kOff);
+//m_downarm.Set(frc::DoubleSolenoid::Value::kForward);
+//m_downarm.Set(frc::DoubleSolenoid::Value::kReverse);
+
+
+    //uparm and downarm
+    bool bX = m_driverController.GetXButtonPressed();
+    bool bY = m_driverController.GetYButtonPressed();
+    if (bX == true)
+    //move am up
+    {
+      m_uparm.Set(frc::DoubleSolenoid::Value::kForward);
+    }
+    if (bY == true)
+  //move arm downward
+    {
+      m_uparm.Set(frc::DoubleSolenoid::Value::kReverse);
+    }
+
 
 //Grabber
-m_grabberopen.Set(frc::DoubleSolenoid::Value::kOff);
-m_grabberopen.Set(frc::DoubleSolenoid::Value::kForward);
-m_grabberopen.Set(frc::DoubleSolenoid::Value::kReverse);
-// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-m_grabberopen.Set(frc::DoubleSolenoid::Value::kReverse);
+//m_grabberclose.Set(frc::DoubleSolenoid::Value::kOff);
+//m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
+//m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
 
-if (m_driverController.GetBButtonPressed()) {
-   m_grabberopen.Toggle();
-   
-}
-m_grabberclose.Set(frc::DoubleSolenoid::Value::kOff);
-m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
-m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
-// Initialize the DoubleSolenoid so it knows where to start.  Not required for single solenoids.
-m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
 
-if (m_driverController.GetAButtonPressed()) {
-   m_grabberclose.Toggle();
-   
+
+
+ //Grabber open and close
+    bool bA = m_driverController.GetAButtonPressed();
+    bool bB = m_driverController.GetBButtonPressed();
+    //open grabber
+    if (bA == true)
+    {
+      m_grabberclose.Set(frc::DoubleSolenoid::Value::kForward);
+    }
+    //close grabber
+    if (bB == true)
+    {
+      m_grabberclose.Set(frc::DoubleSolenoid::Value::kReverse);
+    }
+
 }
   //Claw
   //double rightTrigger = m_joystick.GetTriggerAxis(frc::GenericHID::kRightHand);
@@ -258,7 +293,7 @@ if (m_driverController.GetAButtonPressed()) {
     //{
      // m_clawExtend.Set(DoubleSolenoid::Value::kReverse);
     //}                               
-}
+//}
  
 
 
